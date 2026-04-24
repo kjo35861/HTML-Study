@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            ul {
+                display: flex;
+                list-style-type: none;
+                justify-content: flex-start;
+                border: 1px solid black;
+                gap: 20px;
+                padding: 10px;
+                width: 400px;
+                height: 30px;
+            }
+
+            li {
+                width: 100px;
+                height: 20px;
+                border: 1px solid black;
+                flex-shrink: 1;
+                flex: 1 1;
+            }
+            
+            li.item {
+                flex-grow: 2;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li class="item"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </nav>
+    </body>
+</html>
