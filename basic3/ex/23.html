@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function makeCounter() {
+                let sum = 0;
+                function count() {
+                    sum += 1;
+                    return sum;
+                }
+                return count;
+            }
+
+            const counter = makeCounter();
+            console.log(counter()); // 1
+            console.log(counter()); // 2
+            console.log(counter()); // 3
+        </script>
+    </body>
+</html>

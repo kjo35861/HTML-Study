@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let adminId = "admin";
+            let adminPw = "1234";
+
+            let inputId = "admin";
+            let inputPw = "1234";
+
+            if (adminId == inputId && adminPw == inputPw) {
+                console.log("로그인 성공")
+            } else if (adminId != inputId) {
+                console.log("로그인 실패 (ID)")
+            } else if (adminPw != inputPw) {
+                console.log("로그인 실패 (PW)")
+            }
+
+
+        </script>
+    </body>
+</html>

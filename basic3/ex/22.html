@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // function calc(run, num) {
+            //     return run(num);
+            // }
+
+            // function addition(num) {
+            //     return num === 0 ? 0 : num + addition(num-1);
+            // }
+
+            // function factorial(num) {
+            //     return num === 0 || num === 1 ? 1 : num * factorial(num - 1);
+            // }
+
+            // const result = calc(addition, 10)
+            // const result2 = calc(factorial, 10)
+
+            // console.log(result)
+            // console.log(result2)
+            
+
+            function myMap(nums, fx) {
+                const newArray = [];
+
+                for (i = 0; i < nums.length; i++) {
+                    newArray.push(fx(nums[i]));
+                }
+                return newArray;
+            }
+
+            // map 사용 코드
+            // function myMap2(nums, fx) {
+            //     return nums.map(n => fx(n));
+            // }
+
+            console.log(myMap([1, 2, 3, 4], (x) => x * 2));   // [2, 4, 6, 8]
+            console.log(myMap([1, 2, 3, 4], (x) => x ** 2));  // [1, 4, 9, 16]
+
+        </script>
+    </body>
+</html>
