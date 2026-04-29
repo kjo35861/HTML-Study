@@ -12,9 +12,10 @@
 
             .container {
                 display: flex;
-                flex-direction: column;
+                /* flex-direction: column; */
                 justify-content: center;
                 align-items: center;
+                gap: 20px;
                 margin: 0 auto;
                 width: 1200px;
                 height: 100%;
@@ -96,7 +97,68 @@
                 &:active {
                     background-color: #003e65;
                 }
+            }
 
+            .option-items-top {
+                display: flex;
+                justify-content: space-between;
+                gap: 30px;
+                width: 100%;
+            }
+
+            .search-input {
+                box-sizing: border-box;
+                padding: 0 10px;
+                width: 300px;
+            }
+
+            .df-row {
+                display: flex;
+            }
+
+            .btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;
+                border: 1px solid #dbdbdb;
+                border-radius: 4px;
+                padding: 8px 15px;
+                /* width: 100%; */
+                /* height: 40px; */
+                background-color: #555;
+                color: #fafafa;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #444;
+                }
+
+                &:active {
+                    background-color: #333;
+                }
+            }
+
+            .btn.edit {
+                background-color: #e4ac33;
+                &:hover {
+                    background-color: #b98c2b;
+                }
+
+                &:active {
+                    background-color: #d8a330;
+                }
+            }
+
+            .btn.delete {
+                background-color: rgb(233, 56, 56);
+                &:hover {
+                    background-color: rgb(182, 7, 7);
+                }
+
+                &:active {
+                    background-color: #d33939;
+                }
             }
 
             .user-table {
@@ -111,6 +173,7 @@
                     box-sizing: border-box;
                     border: 1px solid #dbdbdb;
                     padding: 5px 10px;
+                    text-align: center;
                 }
             }
         </style>
@@ -128,20 +191,39 @@
                 </div>
                 <button class="register-button">사용자 정보 등록</button>
             </div>
-            <div class="card">
-                <table class="user-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>사용자 이름</th>
-                            <th>비밀번호</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-                </table>
+            <div>
+                <div class="card">
+                    <div class="option-items-top">
+                        <div class="df-row">
+                            <input type="text" class="search-input">
+                            <button class="btn">검색</button>
+                        </div>
+                        <div class="df-row">
+                            <button class="btn edit">수정</button>
+                            <button class="btn delete">삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="all-Check"></th>
+                                <th>ID</th>
+                                <th>사용자 이름</th>
+                                <th>비밀번호</th>
+                                <th>삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
 
         <script>
@@ -213,12 +295,30 @@
                 const tbody = document.querySelector(".user-table > tbody")
                 tbody.innerHTML = userList.map(user =>`
                     <tr>
+                        <th><input type="checkbox" id="row-check"></th>
                         <td>${user.id}</td>
                         <td>${user.username}</td>
                         <td>${user.password}</td>
                         <td><button onclick = "handleDeleteOnClick(${user.id})">삭제</button></td>
                     </tr>`).join("");
             }
+            
+            // 체크박스 모두선택 코드
+            const allcheck = document.getElementById("all-Check");
+            allcheck.onclick = (e) => {
+                const check = e.target.checked;
+                const rowcheck = document.querySelectorAll("#row-check")
+
+                rowcheck.forEach(rowcheck => {
+                    rowcheck.checked = check;
+                })
+            }
+
+            const editButton = document.querySelector(".edit")
+            editButton.onclick = () => {
+                registerButton.disabled = true;
+            }
+
 
         </script>
     </body>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody class="name-table-body">
+
+            </tbody>
+        </table>
+
+
+        <script>
+            // map(mapping) -> 일치하는 것을 1:1로 짝 짓는다.
+            // [ 10, 20, 30 ] -> [ 100, 200, 300 ]
+            // [ "준일", "준이", "준삼" ] -> [ "김준일", "김준이", "김준삼" ]
+            // [ {name: "준일"}, {name: "준이"}, {name: "준삼"} ]
+            // [ "준일", "준이", "준삼" ]
+
+            const arrayObject = {
+                arr: [],
+                map: (mapFx) => {
+                    const newArray = [];
+                    for (let i = 0; i < arrayObject.arr.length; i++) {
+                        newArray.push(mapFx(arrayObject.arr[i]));
+                    }
+                    return newArray;
+                },
+                filter: (predicate) => {
+                    const newArray = [];
+                    for (let i =0; i < arrayObject.arr.length; i++) {
+                        if (predicate(arrayObject.arr[i])) {
+                            newArray.push(arrayObject.arr[i])
+                        }
+                    }
+                    return newArray;
+                }
+            }
+
+            const names = [ "준일", "준이", "준삼" ];
+            console.log(names);
+            arrayObject.arr = names;
+            console.log(arrayObject.map(name => "김" + name));
+            /*arrayObject.arr = names
+                arrayObject속 arr배열에 names로 교체
+            arrayObject.map(name => "김" + name))
+                arrayObject속 map을 작동.
+                map : arr배열의 인덱스번호를 1씩 증가시키며 반복해 콜백함수를 호출및 적용 후 newArray에 추가 (각 value를 name변수로 지정, "김" + name 의 형태로 변환 후 newArray에 push)
+                리턴 newArray*/
+
+            console.log(arrayObject.filter(name => name.includes("이")));
+
+            const box1 = {
+                minibox: {
+                    content: "미니박스1",
+                }
+            }
+
+            const box2 = {
+                minibox: {
+                    content: "미니박스2",
+                }
+            }
+
+            const box3 = {
+                minibox: {
+                    content: "미니박스3",
+                }
+            }
+
+            const boxList = [
+                box1, box2, box3
+            ];
+
+            const miniBoxList = [
+                box1.minibox, box2.minibox, box3.minibox
+            ];
+
+            const miniBoxList2 = [];
+            for (let box of boxList) {
+                miniBoxList2.push(box.minibox);
+            }
+
+            const miniBoxList3 = boxList.map(box => box.minibox);
+
+            const contents = boxList.map(box => box.minibox.content)
+            console.log(contents);
+
+            const name = "김준일";
+            const message = `${name}님 환영합니다.`;
+            console.log(message);
+
+            const nameList = [ "김준일", "김준이", "김준삼" ]
+            // [ "<tr><td>김준일</td></tr>", "<tr><td>김준이</td></tr>", "<tr><td>김준삼</td></tr>",]
+
+            console.log(nameList.map(name => "<tr><td>" + name + "</td></tr>"));
+            console.log(nameList.map(name => `<tr><td>${name}</td></tr>`));
+
+            const tableBody = document.querySelector(".name-table-body");
+            console.log({tableBody});
+            tableBody.innerHTML = nameList.map(name => `<tr><td>${name}</td></tr>`).join("");
+        </script>
+    </body>
+</html>

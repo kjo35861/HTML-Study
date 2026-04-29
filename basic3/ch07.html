@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        html body {
+            margin: 0;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 1200px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid gray;
+            box-shadow: 0 0 5px #000044;
+            border-radius: 4px;
+            padding: 30px;
+
+        }
+
+        .input-box {
+            display: flex;
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            width: 360px;
+            height: 50px;
+
+            & > input {
+                align-items: center;
+                justify-content: center;
+                background-color: #00000000;
+                outline: none;
+                border: none;
+                margin: 0 10px;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .register-button {
+            display: flex;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            background-color: #0000ff;
+            border-radius: 4px;
+            width: 360px;
+            height: 45px;
+            color: white;
+
+            &:hover {
+                background-color: #2424d6;
+            }
+
+            &:active {
+                background-color: #0606aa;
+            }
+        }
+    </style>
+    <body>
+        <!--1. input 2개 (username, password) -->
+        <!--2. button 1개 (등록하기) -->
+
+        <div class="container">
+            <div class="card">
+                <div class="input-box">
+                    <input type="text" class="input" placeholder="사용자 이름" name="username">
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input" placeholder="비밀번호" name="password">
+                </div>
+                <!-- <div class="button">
+                    <label for="">등록</label>
+                </div> -->
+                <button class="register-button" >등록</button>
+            </div>
+        </div>
+
+        <!-- <script>
+            let userList = [];
+
+            function autoIncrement() {
+                let currentId = 0;
+
+                return function() {
+                    currentId++;
+                    return currentId;
+                }
+            }
+
+            const getNewId = autoIncrement();
+
+            const inputBoxs = document.querySelectorAll(".input-box")
+
+            for (let inputBox of inputBoxs) {
+                const inputElement = inputBox.querySelector("input");
+
+                inputElement.onfocus = (event) => {
+                    inputBox.classList.add("input-is-not-empty");
+                }
+
+                inputElement.onblur = (event) => {
+                    if (!event.target.value) {
+                        inputBox.classList.remove("input-is-not-empty");
+                    }
+                }
+            }
+            // const inputElements = inputBoxs[0].querySelectorAll(".input-box > input");
+
+            const registerButton = document.querySelector(".register-button");
+            registerButton.onclick = () => {
+                const inputs = Array.from(inputBoxs).map(inputBox => inputBox.querySelector("input"))
+
+                let newUser = {
+                    id: getNewId(),
+                }
+
+                Array.from(inputs).forEach(element => {
+                    const {name, value} = element;
+                    newUser = {
+                        ...newUser,
+                        [name]: value,
+                    }
+                });
+
+                userList = [
+                    ...userList,
+                    newUser,
+                ];
+
+                console.log(userList);
+            }
+        </script> -->
+
+        <script>
+            /*입력된 username 과 password 를 추출해서 Array 에 담기
+            .querySelectorAll("a") = a 라는 class를 가진 대상을 선택 */
+            let userList = [];
+
+            function autoIncrement() {
+                let currentId = 0;
+                
+                return function() {
+                    currentId++;
+                    return currentId;
+                }
+            }
+
+            const getNewId = autoIncrement();
+            
+            const inputboxs = document.querySelectorAll(".input-box")
+
+            // for (let inputbox of inputboxs) {
+            //     const inputElement = inputbox.querySelector("input")
+            // }
+            
+            const registerButton = document.querySelector(".register-button")
+            registerButton.onclick = () => {
+                const input = Array.from(inputboxs).map(inputBox => inputBox.querySelector("input"))
+
+                let newUser = {
+                    Id: getNewId(),
+                }
+
+                Array.from(input).forEach(element => {
+                    const {name, value} = element;
+                    newUser = {
+                        ...newUser,
+                        [name]: value,
+                    }
+                })
+
+                userList = {
+                    ...userList,
+                    newUser,
+                }
+                console.log(userList);
+            }
+        </script>
+    </body>
+</html>
