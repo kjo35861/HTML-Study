@@ -161,28 +161,6 @@
                 }
             }
 
-            /* .btn.ok {
-                background-color: #006caf;
-                &:hover {
-                    background-color: #005489;
-                }
-
-                &:active {
-                    background-color: #003e65;
-                }
-            }
-
-            .btn.cancle {
-                background-color: rgb(233, 56, 56);
-                &:hover {
-                    background-color: rgb(182, 7, 7);
-                }
-
-                &:active {
-                    background-color: #d33939;
-                }
-            } */
-
             .user-table {
                 box-sizing: border-box;
                 border: 1px solid #dbdbdb;
@@ -286,7 +264,6 @@
                         if (currentTableControlMode === tableControlMode.MODIFY) {
 
                         }
-
                         currentTableControlMode = tableControlMode.NONE;
                         checkBoxReset();
                         break;
@@ -392,7 +369,6 @@
                         <td>${user.password}</td>
                         <td><button onclick = "handleDeleteOnClick(${user.id})">삭제</button></td>
                     </tr>`).join("");
-                    
             }
 
             function handleOnAllCheck(e) {
