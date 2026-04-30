@@ -161,6 +161,28 @@
                 }
             }
 
+            /* .btn.ok {
+                background-color: #006caf;
+                &:hover {
+                    background-color: #005489;
+                }
+
+                &:active {
+                    background-color: #003e65;
+                }
+            }
+
+            .btn.cancle {
+                background-color: rgb(233, 56, 56);
+                &:hover {
+                    background-color: rgb(182, 7, 7);
+                }
+
+                &:active {
+                    background-color: #d33939;
+                }
+            } */
+
             .user-table {
                 box-sizing: border-box;
                 border: 1px solid #dbdbdb;
@@ -199,9 +221,8 @@
                             <input type="text" class="search-input">
                             <button class="btn">검색</button>
                         </div>
-                        <div class="df-row">
-                            <button class="btn edit">수정</button>
-                            <button class="btn delete">삭제</button>
+                        <div class="df-row" id="modeButtonGroup">
+
                         </div>
                     </div>
                 </div>
@@ -210,7 +231,7 @@
                     <table class="user-table">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="all-Check"></th>
+                                <th><input type="checkbox" id="all-Check" onchange="handleOnAllCheck(event)"></th>
                                 <th>ID</th>
                                 <th>사용자 이름</th>
                                 <th>비밀번호</th>
@@ -227,8 +248,56 @@
         </div>
 
         <script>
+            const tableControlMode = {
+                NONE: "NONE",
+                MODIFY: "MODIFY",
+                DELETE: "DELETE",
+            }
+            let currentTableControlMode = tableControlMode.NONE;
 
             let userList = [];
+            modeButtonGroupRender();
+            tableRender();
+
+            function deleteAllById() {
+                userList = userList.filter(user => !user.checked)
+            }
+
+            function handleModeButtonOnClick(e) {
+                const checkBoxReset = () => {
+                    userList = userList.map(user => ({
+                        ...user,
+                        checked: false,
+                    }));
+                }
+                // const checkBoxAll = document.querySelector("#all");
+
+                switch (e.target.value) {
+                    case "edit":
+                        currentTableControlMode = tableControlMode.MODIFY;
+                        break;
+                    case "delete":
+                        currentTableControlMode = tableControlMode.DELETE;
+                        break;
+                    case "ok":
+                        if (currentTableControlMode === tableControlMode.DELETE) {
+                            deleteAllById();
+                        }
+                        if (currentTableControlMode === tableControlMode.MODIFY) {
+
+                        }
+
+                        currentTableControlMode = tableControlMode.NONE;
+                        checkBoxReset();
+                        break;
+                    case "cancle":
+                        currentTableControlMode = tableControlMode.NONE;
+                        checkBoxReset();
+                        break;
+                }
+                modeButtonGroupRender();
+                tableRender();
+            }
 
             function autoIncrement() {
                 let currentId = 0;
@@ -265,6 +334,7 @@
 
                 let newUser = {
                     id: getNewId(),
+                    checked: false,
                 }
 
                 Array.from(inputs).forEach(element => {
@@ -291,33 +361,92 @@
                 tableRender();
             }
 
+            function modeButtonGroupRender() {
+                const modeButtonGroup = document.querySelector("#modeButtonGroup");
+                if (currentTableControlMode === tableControlMode.NONE) {
+                    modeButtonGroup.innerHTML = `
+                        <button class="btn edit" value="edit" onclick="handleModeButtonOnClick(event)">수정</button>
+                        <button class="btn delete" value="delete" onclick="handleModeButtonOnClick(event)">삭제</button>
+                    `
+                } else {
+                    modeButtonGroup.innerHTML =`
+                        <button class="btn" value="ok" onclick="handleModeButtonOnClick(event)">확인</button>
+                        <button class="btn" value="cancle" onclick="handleModeButtonOnClick(event)">취소</button>
+                    `
+                }
+            }
+
             function tableRender() {
+                const isDisable = currentTableControlMode === tableControlMode.NONE;
+                const checkedRow = userList.filter(s => s.checked);
+                const allCheckBox = document.querySelector("#all-Check");
+                allCheckBox.disabled = isDisable || currentTableControlMode === tableControlMode.MODIFY;
+                allCheckBox.checked = checkedRow.length === userList.length && userList.length !== 0;
+
                 const tbody = document.querySelector(".user-table > tbody")
                 tbody.innerHTML = userList.map(user =>`
                     <tr>
-                        <th><input type="checkbox" id="row-check"></th>
+                        <th><input type="checkbox" id=${user.id} ${user.checked ? "checked" : ""} ${isDisable ? "disabled" : ""} onchange="handleOnAllCheck(event)"></th>
                         <td>${user.id}</td>
                         <td>${user.username}</td>
                         <td>${user.password}</td>
                         <td><button onclick = "handleDeleteOnClick(${user.id})">삭제</button></td>
                     </tr>`).join("");
-            }
-            
-            // 체크박스 모두선택 코드
-            const allcheck = document.getElementById("all-Check");
-            allcheck.onclick = (e) => {
-                const check = e.target.checked;
-                const rowcheck = document.querySelectorAll("#row-check")
-
-                rowcheck.forEach(rowcheck => {
-                    rowcheck.checked = check;
-                })
+                    
             }
 
-            const editButton = document.querySelector(".edit")
-            editButton.onclick = () => {
-                registerButton.disabled = true;
+            function handleOnAllCheck(e) {
+                const onChecked = e.target.checked;
+                if (e.target.id === "all-Check") {
+                    userList = userList.map(s => ({
+                        ...s,
+                        checked: onChecked,
+                    }))
+                    tableRender();
+                } else if (currentTableControlMode === tableControlMode.DELETE) {
+                    userList = userList.map(s => {
+                        if(s.id === parseInt(e.target.id)) {
+                            return {
+                                ...s,
+                                checked: onChecked,
+                            }
+                        }
+                        return s;
+                    })
+                } else if (currentTableControlMode === tableControlMode.MODIFY) {
+                    userList = userList.map(s => {
+                        if(s.id === parseInt(e.target.id)) {
+                            return {
+                                ...s,
+                                checked: onChecked,
+                            }
+                        }
+                        return {
+                            ...s,
+                            checked: !onChecked,
+                        }
+                        return s;
+                    })
+                }
+                tableRender();
             }
+
+
+            // 체크박스 모두선택 코드 (예습)
+            // const allcheck = document.getElementById("all-Check");
+            // allcheck.onclick = (e) => {
+            //     const rowcheck = document.querySelectorAll("#row-check")
+
+            //     rowcheck.forEach(rowcheck => {
+            //         rowcheck.checked = e.target.checked;
+            //     })
+            // }
+
+            // 수정모드
+            // const editButton = document.querySelector(".edit")
+            // editButton.onclick = () => {
+            //     registerButton.disabled = true;
+            // }
 
 
         </script>

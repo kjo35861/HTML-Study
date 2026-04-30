@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // 자바스크립트 스프레드 연산자: 객체 또는 배열의 요소들을 복제하여 옮기는 연산자
+            const user = {
+                
+            };
+
+            const user2 = {
+                ...user,
+                username: "test1234",
+            }
+
+            const user3 = {
+                ...user,
+                username: "test12345",
+            }
+
+            const name = "김준일";
+            const age = 33;
+            const address = "부산 동래구";
+
+            const user4 = {
+                ...user3,
+                name,
+                age,
+                address,
+            }
+
+            console.log(user);
+            console.log(user2);
+            console.log(user3);
+            console.log(user4);
+
+            const userList = [user];
+            const userList2 = [...userList, user2];
+            const userList3 = [...userList2, user3];
+            const userList4 = [...userList3, user4];
+
+            console.log(userList);
+            console.log(userList2);
+            console.log(userList3);
+            console.log(userList4);
+        </script>
+    </body>
+</html>
